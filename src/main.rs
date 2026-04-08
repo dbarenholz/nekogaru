@@ -82,7 +82,14 @@ fn to_tests_str(testcases: Vec<(String, String)>) -> String {
 /// Overwrites the .cargo/config.toml file to work on `name`.
 fn modify_dot_config(name: &str) {
   let config_path = format!("{}/.cargo/config.toml", env!("CARGO_MANIFEST_DIR"));
-  let wanted_content = format!("[alias]\nt = \"test --bin {name}\"");
+
+[alias]
+t = "test --release --bin abc"
+
+[build]
+rustflags = ["-C", "target-cpu=native"]
+
+  let wanted_content = format!("[alias]\nt = \"test --release --bin {name}\"\n\n[build]\nrustflags = [\"-C\",\"target-cpu=native\"]");
   write(config_path, wanted_content).expect("Failed to write to config.toml");
 }
 
