@@ -1,2 +1,5 @@
 [alias]
 t = "test --bin abc"
+
+[build]
+rustflags = ["-C", "target-cpu=native"]
